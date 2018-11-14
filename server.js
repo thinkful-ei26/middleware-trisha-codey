@@ -116,12 +116,15 @@ app.put('/api/notes/:id', (req, res, next) => {
   });
 });
 
+//Catch-all 404
 app.use(function (req, res, next) {
-  var err = new Error('Not Found');
+  const err = new Error('Not Found');
   err.status = 404;
-  res.status(404).json({ message: 'Not Found' });
+  //res.status(404).json({ message: 'Not Found' });
+  next(err); //handle error on next fn
 });
 
+//Catch-all Error handler
 app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.json({
